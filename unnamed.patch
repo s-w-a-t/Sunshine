@@ -1,0 +1,171 @@
+Index: .idea/inspectionProfiles/Project_Default.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/inspectionProfiles/Project_Default.xml	(revision d1ecd13b39371427f9c7bb7de5ac31cd488c88df)
++++ .idea/inspectionProfiles/Project_Default.xml	(revision d1ecd13b39371427f9c7bb7de5ac31cd488c88df)
+@@ -0,0 +1,10 @@
++<component name="InspectionProjectProfileManager">
++  <profile version="1.0">
++    <option name="myName" value="Project Default" />
++    <inspection_tool class="AndroidLintAppCompatResource" enabled="false" level="ERROR" enabled_by_default="false" />
++    <inspection_tool class="LoggerInitializedWithForeignClass" enabled="false" level="WARNING" enabled_by_default="false">
++      <option name="loggerClassName" value="org.apache.log4j.Logger,org.slf4j.LoggerFactory,org.apache.commons.logging.LogFactory,java.util.logging.Logger" />
++      <option name="loggerFactoryMethodName" value="getLogger,getLogger,getLog,getLogger" />
++    </inspection_tool>
++  </profile>
++</component>
+\ No newline at end of file
+Index: .idea/inspectionProfiles/profiles_settings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/inspectionProfiles/profiles_settings.xml	(revision d1ecd13b39371427f9c7bb7de5ac31cd488c88df)
++++ .idea/inspectionProfiles/profiles_settings.xml	(revision d1ecd13b39371427f9c7bb7de5ac31cd488c88df)
+@@ -0,0 +1,7 @@
++<component name="InspectionProjectProfileManager">
++  <settings>
++    <option name="PROJECT_PROFILE" value="Project Default" />
++    <option name="USE_PROJECT_PROFILE" value="true" />
++    <version value="1.0" />
++  </settings>
++</component>
+\ No newline at end of file
+Index: app/src/main/java/com/example/android/sunshine/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>windows-1251
+===================================================================
+--- app/src/main/java/com/example/android/sunshine/MainActivity.java	(revision 4cdc8e07842f7db627db214be686d11a34b68b1e)
++++ app/src/main/java/com/example/android/sunshine/MainActivity.java	(revision d1ecd13b39371427f9c7bb7de5ac31cd488c88df)
+@@ -31,7 +31,7 @@
+         setContentView(R.layout.activity_main);
+         if (savedInstanceState == null) {
+             getSupportFragmentManager().beginTransaction()
+-                    .add(R.id.action_bar_container, new PlaceholderFragment())
++                    .add(R.id.container, new ForecastFragment())
+                     .commit();
+         }
+     }
+@@ -56,87 +56,6 @@
+             return true;
+         }
+         return super.onOptionsItemSelected(item);
+-    }
+ 
+-
+-    public static class PlaceholderFragment extends Fragment {
+-        public PlaceholderFragment() {
+-        }
+-
+-        @Override
+-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+-                                 Bundle savedInstanceState) {
+-
+-
+-            String[] data = {
+-                    "Today-Sunny-88/63",
+-                    "Tommorow-Foggy-70/40",
+-                    "Weds-Cloudy-72/63",
+-                    "Thurs-Asteroids-75/65",
+-                    "Fri-HELP TRAPPED IN WEATHERSTATION-60/51",
+-                    "Sun-Sunny-80/68"
+-            };
+-            List<String> weekForecast = new ArrayList<String>(Arrays.asList(data));
+-
+-            ArrayAdapter<String> forecastAdapter =
+-                    new ArrayAdapter<String>(
+-                            getActivity(),
+-                            R.layout.list_item_forecast,
+-                            R.id.list_item_forecast_textview,
+-                            weekForecast);
+-
+-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+-
+-            ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
+-            listView.setAdapter(forecastAdapter);
+-
+-            //HttpUrlConection-------------------
+-            HttpURLConnection urlConnection = null;
+-            BufferedReader reader = null;
+-
+-            String forecastJsonStr = null;
+-
+-            try {
+-                URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&mode=json&units=metric&cnt=7");
+-
+-                urlConnection = (HttpURLConnection) url.openConnection();
+-                urlConnection.setRequestMethod("GET");
+-                urlConnection.connect();
+-
+-                InputStream inputStream = urlConnection.getInputStream();
+-                StringBuffer buffer = new StringBuffer();
+-                if (inputStream == null) {
+-                    return null;
+-                }
+-                reader = new BufferedReader(new InputStreamReader(inputStream));
+-
+-                String line;
+-                while ((line = reader.readLine()) != null) {
+-                    buffer.append(line + "\n");
+-                }
+-
+-                if (buffer.length() == 0) {
+-                    return null;
+-                }
+-
+-                forecastJsonStr = buffer.toString();
+-            } catch (IOException e) {
+-                Log.e("PlaceholderFragment", "Error", e);
+-                return null;
+-            } finally {
+-                if (urlConnection != null) {
+-                    urlConnection.disconnect();
+-                }
+-                if (reader != null) {
+-                    try {
+-                        reader.close();
+-                    } catch (IOException e) {
+-                        Log.e("PlaceholderFragment", "Eroor closing stream", e);
+-                    }
+-                }
+-            }
+-
+-            return rootView;
+-        }
+     }
+ }
+Index: app/src/main/res/layout/list_item_forecast.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/list_item_forecast.xml	(revision 4cdc8e07842f7db627db214be686d11a34b68b1e)
++++ app/src/main/res/layout/list_item_forecast.xml	(revision d1ecd13b39371427f9c7bb7de5ac31cd488c88df)
+@@ -4,6 +4,4 @@
+     android:layout_height="wrap_content"
+     android:minHeight="?android:attr/listPreferredItemHeight"
+     android:gravity="center_vertical"
+-    android:id="@+id/list_item_forecast_textview">
+-
+-</TextView>
+\ No newline at end of file
++    android:id="@+id/list_item_forecast_textview"/>
+\ No newline at end of file
+Index: app/src/main/res/menu/forecastfragment.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/menu/forecastfragment.xml	(revision d1ecd13b39371427f9c7bb7de5ac31cd488c88df)
++++ app/src/main/res/menu/forecastfragment.xml	(revision d1ecd13b39371427f9c7bb7de5ac31cd488c88df)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<menu xmlns:android="http://schemas.android.com/apk/res/android">
++    <item android:id="@+id/action_refresh"
++        android:title="Refresh"
++        android:showAsAction="never"/>
++</menu>
+\ No newline at end of file
