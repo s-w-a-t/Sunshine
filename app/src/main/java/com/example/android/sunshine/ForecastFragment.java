@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.format.Time;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -102,6 +103,7 @@ public class ForecastFragment extends Fragment {
 
     //Adding AsyncTask to pull data from server
     public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
+        private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
 
         //converting data
         private String getReadableDateString(long time) {
@@ -165,7 +167,7 @@ public class ForecastFragment extends Fragment {
                 double low = temperatureObject.getDouble(OWM_MIN);
                 highAndLow = formatHighLows(high, low);
 
-                //weather for i-th day...
+                //weather for <nth> day...
                 resultStrs[i] = day + " - " + description + " - " + highAndLow;
             }
             for (String s : resultStrs) {
@@ -232,6 +234,7 @@ public class ForecastFragment extends Fragment {
                 }
                 forecastJsonStr = buffer.toString();
             } catch (IOException e) {
+                Log.e(LOG_TAG, "Error ", e);
                 return null;
             } finally {
                 if (urlConnection != null) {
@@ -241,13 +244,14 @@ public class ForecastFragment extends Fragment {
                     try {
                         reader.close();
                     } catch (final IOException e) {
-
+                        Log.e(LOG_TAG, "Error closing stream", e);
                     }
                 }
             }
             try {
                 return getWeatherDataFromJson(forecastJsonStr, numDays);
             } catch (JSONException e) {
+                Log.e(LOG_TAG, e.getMessage(), e);
                 e.printStackTrace();
             }
             return null;
