@@ -90,7 +90,8 @@ public class ForecastFragment extends Fragment {
     private void updateWeather() {
         FetchWeatherTask weatherTask = new FetchWeatherTask();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String location = prefs.getString(getString(R.string.pref_location_key),
+        String location = prefs.getString(
+                getString(R.string.pref_location_key),
                 getString(R.string.pref_location_default));
         weatherTask.execute(location);
     }
@@ -165,9 +166,18 @@ public class ForecastFragment extends Fragment {
                 JSONObject temperatureObject = dayForecast.getJSONObject(OWM_TEMPERATURE);
                 double high = temperatureObject.getDouble(OWM_MAX);
                 double low = temperatureObject.getDouble(OWM_MIN);
-                highAndLow = formatHighLows(high, low);
 
-                //weather for <nth> day...
+                //convert to Fahrenheit
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                String typeTemperature = sharedPreferences.getString(
+                        getString(R.string.pref_unit_key),
+                        getString(R.string.pref_unit_cels));
+                if (typeTemperature.equals(getString(R.string.pref_unit_fahr))) {
+                    high = (high * 1.8) + 32;
+                    low = (low * 1.8) + 32;
+                }
+
+                highAndLow = formatHighLows(high, low);
                 resultStrs[i] = day + " - " + description + " - " + highAndLow;
             }
             for (String s : resultStrs) {
