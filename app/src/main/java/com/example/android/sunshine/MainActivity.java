@@ -13,9 +13,11 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
     private final String LOG_TAG = MainActivity.class.getSimpleName();
+    private final String LOG_TAG1 = "life";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.v(LOG_TAG1, "in onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
@@ -65,4 +67,35 @@ public class MainActivity extends AppCompatActivity {
             Log.d(LOG_TAG, "Couldn't call " + location + ", no receiving apps installed!");
         }
     }
+
+    @Override
+    protected void onStart() {
+        Log.v(LOG_TAG1, "in onStart");
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        Log.v(LOG_TAG1, "in onResume");
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        Log.v(LOG_TAG1, "in onPause");
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        Log.v(LOG_TAG1, "in onStop");
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.v(LOG_TAG1, "in onSestroy");
+        super.onDestroy();
+    }
+
 }
