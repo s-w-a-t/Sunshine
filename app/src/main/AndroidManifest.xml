@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!-- <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> -->
+     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -34,6 +34,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.android.sunshine.MainActivity" />
         </activity>
-    </application>
 
+        <provider
+            android:authorities="com.example.android.sunshine"
+            android:name=".data.WeatherProvider" />
+    </application>
 </manifest>
