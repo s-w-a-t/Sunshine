@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        Log.v(LOG_TAG1, "in onSestroy");
+        Log.v(LOG_TAG1, "in onDestroy");
         super.onDestroy();
     }
 
