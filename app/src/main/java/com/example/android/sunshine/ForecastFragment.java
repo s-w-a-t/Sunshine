@@ -1,16 +1,16 @@
 package com.example.android.sunshine;
 
 
+import android.database.Cursor;
+
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,17 +19,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import com.example.android.sunshine.data.WeatherContract;
 
-/**
- * A placeholder fragment containing a simple view.
- */
+import com.example.android.sunshine.data.WeatherContract;
 
 public class ForecastFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private final String LOG_TAG = "lifeLoader";
-    private ForecastAdapter mForecastAdapter;
     private static final int FORECAST_LOADER = 0;
+    // For the forecast view we're showing only a small subset of the stored data.
+    // Specify the columns we need.
     private static final String[] FORECAST_COLUMNS = {
             // In this case the id needs to be fully qualified with a table name, since
             // the content provider joins the location & weather tables in the background
@@ -47,6 +44,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
             WeatherContract.LocationEntry.COLUMN_COORD_LAT,
             WeatherContract.LocationEntry.COLUMN_COORD_LONG
     };
+
     // These indices are tied to FORECAST_COLUMNS.  If FORECAST_COLUMNS changes, these
     // must change.
     static final int COL_WEATHER_ID = 0;
@@ -59,7 +57,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     static final int COL_COORD_LAT = 7;
     static final int COL_COORD_LONG = 8;
 
-
+    private ForecastAdapter mForecastAdapter;
 
     public ForecastFragment() {
     }
@@ -67,6 +65,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Add this line in order for this fragment to handle menu events.
         setHasOptionsMenu(true);
     }
 
@@ -77,6 +76,9 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
             updateWeather();
@@ -88,11 +90,12 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         // The CursorAdapter will take data from our cursor and populate the ListView.
         mForecastAdapter = new ForecastAdapter(getActivity(), null, 0);
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+        // Get a reference to the ListView, and attach this adapter to it.
         ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(mForecastAdapter);
 
@@ -114,7 +117,6 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
                 }
             }
         });
-
         return rootView;
     }
 
@@ -138,7 +140,6 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        Log.v(LOG_TAG, "onCreateLoader");
         String locationSetting = Utility.getPreferredLocation(getActivity());
 
         // Sort order:  Ascending, by date.
@@ -157,13 +158,11 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
         mForecastAdapter.swapCursor(cursor);
-        Log.v(LOG_TAG, "onLoadFinished");
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
         mForecastAdapter.swapCursor(null);
-        Log.v(LOG_TAG, "onLoaderReset");
     }
 
     //region old FetchWeatherTask
