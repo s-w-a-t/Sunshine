@@ -104,9 +104,9 @@ public class DetailActivity extends ActionBarActivity {
             mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
 
             // If onLoadFinished happens before this, we can go ahead and set the share intent now.
-//            if (mForecast != null) {
-//                mShareActionProvider.setShareIntent(createShareForecastIntent());
-//            }
+            if (mForecast != null) {
+                mShareActionProvider.setShareIntent(createShareForecastIntent());
+            }
         }
 
         private Intent createShareForecastIntent() {
