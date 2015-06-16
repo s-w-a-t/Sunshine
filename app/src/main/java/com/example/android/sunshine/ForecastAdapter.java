@@ -43,7 +43,10 @@ public class ForecastAdapter extends CursorAdapter {
                 break;
             }
         }
-        return LayoutInflater.from(context).inflate(layoutId, parent, false);
+        View view = LayoutInflater.from(context).inflate(layoutId, parent, false);
+        ViewHolder viewHolder = new ViewHolder(view);
+        view.setTag(viewHolder);
+        return view;
     }
 
     @Override
