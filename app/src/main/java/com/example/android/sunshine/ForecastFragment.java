@@ -2,9 +2,6 @@ package com.example.android.sunshine;
 
 
 import android.database.Cursor;
-
-import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,11 +19,15 @@ import android.widget.ListView;
 
 import com.example.android.sunshine.data.WeatherContract;
 
+/**
+ * Encapsulates fetching the forecast and displaying it as a {@link ListView} layout.
+ */
 public class ForecastFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
-
     private ForecastAdapter mForecastAdapter;
+
     private ListView mListView;
     private int mPosition = ListView.INVALID_POSITION;
+
     private static final String SELECTED_KEY = "selected_position";
 
     private static final int FORECAST_LOADER = 0;
@@ -105,9 +106,9 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // The ForecastAdapter will take data from a source and
         // use it to populate the ListView it's attached to.
-
         mForecastAdapter = new ForecastAdapter(getActivity(), null, 0);
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
@@ -115,7 +116,6 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         // Get a reference to the ListView, and attach this adapter to it.
         mListView = (ListView) rootView.findViewById(R.id.listview_forecast);
         mListView.setAdapter(mForecastAdapter);
-
         // We'll call our MainActivity
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -188,6 +188,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
         // Sort order:  Ascending, by date.
         String sortOrder = WeatherContract.WeatherEntry.COLUMN_DATE + " ASC";
+
         String locationSetting = Utility.getPreferredLocation(getActivity());
         Uri weatherForLocationUri = WeatherContract.WeatherEntry.buildWeatherLocationWithStartDate(
                 locationSetting, System.currentTimeMillis());

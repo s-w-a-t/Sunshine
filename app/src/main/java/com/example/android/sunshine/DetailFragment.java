@@ -10,7 +10,6 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.ShareActionProvider;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,15 +22,20 @@ import android.widget.TextView;
 import com.example.android.sunshine.data.WeatherContract;
 import com.example.android.sunshine.data.WeatherContract.WeatherEntry;
 
+/**
+ * A placeholder fragment containing a simple view.
+ */
 public class DetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String LOG_TAG = DetailFragment.class.getSimpleName();
     static final String DETAIL_URI = "URI";
+
     private static final String FORECAST_SHARE_HASHTAG = " #SunshineApp";
 
     private ShareActionProvider mShareActionProvider;
     private String mForecast;
     private Uri mUri;
+
     private static final int DETAIL_LOADER = 0;
 
     private static final String[] DETAIL_COLUMNS = {
@@ -163,6 +167,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         if (data != null && data.moveToFirst()) {
             // Read weather condition ID from cursor
             int weatherId = data.getInt(COL_WEATHER_CONDITION_ID);
+
             // Use weather art image
             mIconView.setImageResource(Utility.getArtResourceForWeatherCondition(weatherId));
 

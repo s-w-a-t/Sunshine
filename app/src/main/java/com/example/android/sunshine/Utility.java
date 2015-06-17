@@ -42,7 +42,21 @@ public class Utility {
     // back into date objects for comparison/processing.
     public static final String DATE_FORMAT = "yyyyMMdd";
 
+    /**
+     * Helper method to convert the database representation of the date into something to display
+     * to users.  As classy and polished a user experience as "20140102" is, we can do better.
+     *
+     * @param context Context to use for resource localization
+     * @param dateInMillis The date in milliseconds
+     * @return a user-friendly representation of the date.
+     */
     public static String getFriendlyDayString(Context context, long dateInMillis) {
+        // The day string for forecast uses the following logic:
+        // For today: "Today, June 8"
+        // For tomorrow:  "Tomorrow"
+        // For the next 5 days: "Wednesday" (just the day name)
+        // For all days after that: "Mon Jun 8"
+
         Time time = new Time();
         time.setToNow();
         long currentTime = System.currentTimeMillis();
@@ -68,7 +82,18 @@ public class Utility {
         }
     }
 
+    /**
+     * Given a day, returns just the name to use for that day.
+     * E.g "today", "tomorrow", "wednesday".
+     *
+     * @param context Context to use for resource localization
+     * @param dateInMillis The date in milliseconds
+     * @return
+     */
     public static String getDayName(Context context, long dateInMillis) {
+        // If the date is today, return the localized version of "Today" instead of the actual
+        // day name.
+
         Time t = new Time();
         t.setToNow();
         int julianDay = Time.getJulianDay(dateInMillis, t.gmtoff);
@@ -86,6 +111,13 @@ public class Utility {
         }
     }
 
+    /**
+     * Converts db date format to the format "Month day", e.g "June 24".
+     * @param context Context to use for resource localization
+     * @param dateInMillis The db formatted date string, expected to be of the form specified
+     *                in Utility.DATE_FORMAT
+     * @return The day in the form of a string formatted "December 6"
+     */
     public static String getFormattedMonthDay(Context context, long dateInMillis ) {
         Time time = new Time();
         time.setToNow();
