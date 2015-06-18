@@ -1,6 +1,9 @@
 package com.example.android.sunshine;
 
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -19,7 +22,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.android.sunshine.data.WeatherContract;
-import com.example.android.sunshine.service.SunshineService;
+import com.example.android.sunshine.sync.SunshineSyncAdapter;
 
 /**
  * Encapsulates fetching the forecast and displaying it as a {@link ListView} layout.
@@ -167,10 +170,9 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     private void updateWeather() {
-        Intent intent = new Intent(getActivity(), SunshineService.class);
-        intent.putExtra(SunshineService.LOCATION_QUERY_EXTRA,
-                Utility.getPreferredLocation(getActivity()));
-        getActivity().startService(intent);
+        //String location = Utility.getPreferredLocation(getActivity());
+        //new FetchWeatherTask(getActivity()).execute(location);
+        SunshineSyncAdapter.syncImmediately(getActivity());
     }
 
     @Override
