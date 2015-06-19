@@ -44,9 +44,6 @@ public class Utility {
     public static final String DATE_FORMAT = "yyyyMMdd";
 
     /**
-     * Helper method to convert the database representation of the date into something to display
-     * to users.  As classy and polished a user experience as "20140102" is, we can do better.
-     *
      * @param context Context to use for resource localization
      * @param dateInMillis The date in milliseconds
      * @return a user-friendly representation of the date.

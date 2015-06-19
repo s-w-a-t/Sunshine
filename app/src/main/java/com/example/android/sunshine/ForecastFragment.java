@@ -25,9 +25,6 @@ import android.widget.ListView;
 import com.example.android.sunshine.data.WeatherContract;
 import com.example.android.sunshine.sync.SunshineSyncAdapter;
 
-/**
- * Encapsulates fetching the forecast and displaying it as a {@link ListView} layout.
- */
 public class ForecastFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String LOG_TAG = ForecastFragment.class.getSimpleName();
@@ -105,10 +102,13 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        //region menu refresh
 //        if (id == R.id.action_refresh) {
 //            updateWeather();
 //            return true;
 //        }
+        //endregion
 
         if (id == R.id.action_map) {
             openPreferredLocationInMap();
@@ -159,9 +159,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
             // swapout in onLoadFinished.
             mPosition = savedInstanceState.getInt(SELECTED_KEY);
         }
-
         mForecastAdapter.setUseTodayLayout(mUseTodayLayout);
-
         return rootView;
     }
 
