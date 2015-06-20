@@ -11,6 +11,7 @@
     <string name="pref_location_label">Location</string>
     <string name="pref_location_key" translatable="false">location</string>
     <string name="pref_location_default" translatable="false">88000</string>
+    <string name="location_dialog_title">Enter your ZIP Code or city name</string>
 
     <string name="pref_unit_label">Temperature Type</string>
     <string name="pref_unit_key" translatable="false">type</string>

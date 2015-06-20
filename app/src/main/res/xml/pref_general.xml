@@ -8,7 +8,8 @@
         android:key="@string/pref_location_key"
         android:defaultValue="@string/pref_location_default"
         android:inputType="text"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:dialogTitle="@string/location_dialog_title" />
 
     <ListPreference
         android:title="@string/pref_unit_label"

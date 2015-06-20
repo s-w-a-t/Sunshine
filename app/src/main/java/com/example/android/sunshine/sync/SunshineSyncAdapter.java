@@ -199,6 +199,7 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
 
             JSONObject cityJson = forecastJson.getJSONObject(OWM_CITY);
             String cityName = cityJson.getString(OWM_CITY_NAME);
+            Log.i("city name", cityName);
 
             JSONObject cityCoord = cityJson.getJSONObject(OWM_COORD);
             double cityLatitude = cityCoord.getDouble(OWM_LATITUDE);

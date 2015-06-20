@@ -8,6 +8,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 public class SettingsActivity extends PreferenceActivity
         implements Preference.OnPreferenceChangeListener {
@@ -38,6 +39,15 @@ public class SettingsActivity extends PreferenceActivity
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object value) {
+
+        if (value.toString().trim().equals("")) {
+
+            Toast.makeText(this, "Location can not be empty - Enter your Location again",
+                    Toast.LENGTH_LONG).show();
+
+            return false;
+        }
+
         String stringValue = value.toString();
 
         if (preference instanceof ListPreference) {
